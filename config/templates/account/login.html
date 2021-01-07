@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Login {% endblock %}
+{% block content %}
+
+{% load socialaccount %}
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <!-- Title -->
+    <div class="fadeIn first">
+      <h1 id="title_login">SocialWeb</h1>
+    </div>
+    <!-- Login Form -->
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      {{ field }}
+      {% endfor%}
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+    <!-- Password and username error -->
+    <div id="formFooter">
+      {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+      <p class="error_line">{{ error }}</p>
+      {% endfor %}
+      {% endif %}
+      <a class="underlineHover" href="#">Forgot Password? |</a>
+      <a class="underlineHover" href="#">Facebook |</a>
+      <a class="underlineHover" href="#">Google |</a>
+      <a class="underlineHover" href="{% provider_login_url 'vk' method='oauth2' %}">Vk |</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

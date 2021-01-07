@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load static %}
+{% load friendshiptags %}
+{% block title %} My friends {% endblock %}
+{% block home %}Home{% endblock %}
+{% block children %}Friends{% endblock %}
+{% block content_side %}
+
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+<div class="search_friends_form">
+    <form method="get" action="{% url 'account_system:search_friends' %}">
+        <p id="search_form_username">{{ friends_search_form }}</p>
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+
+
+
+{% if sent_requests %}
+<div class="friends">
+    <h2 class="friends_title">My requests</h2>
+    {% for friend_request in sent_requests %}
+    <div class="container" style="background-color: rgb(244,244,244)">
+        <div class="row profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-userpic">
+                        <img src="{{ friend_request.to_user.avatar.url }}" class="img-thumbnail">
+                    </div>
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            <p>{{ friend_request.to_user.username }}</p>
+                            <form method="get" action="{% url 'account_system:public_profile' friend_request.to_user.id %}">
+                                {% csrf_token %}
+                                <input class="profile_button" type="submit" value="Watch" style="background-color: #2b2b2b">
+                            </form>
+                        </div>
+                        <div class="profile-usertitle-job">
+                            Developer
+                        </div>
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Profile </a>
+                            </li>
+                            <li>
+                                <a href="</test>" target="_blank">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                    Line 1  </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+
+
+<div class="friends">
+    <h2 class="friends_title">My friends</h2>
+    {% for friend in account_friends%}
+    <div class="container" style="background-color: rgb(244,244,244)">
+        <div class="row profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-userpic">
+                        <img src="{{ friend.avatar.url }}" class="img-thumbnail" alt="...">
+                    </div>
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            <p>{{ friend.username }}</p>
+                            <form method="get" action="{% url 'account_system:public_profile' friend.id %}">
+                                {% csrf_token %}
+                                <input type="submit" value="Watch" style="background-color: rgb(43,43,43)">
+                            </form>
+                        </div>
+                        <div class="profile-usertitle-job">
+                            Developer
+                        </div>
+                    </div>
+                    <div class="profile-userbuttons">
+                        <form method="post" action="{% url 'account_system:get_delete_friendship' friend.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Del">
+                        </form>
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Profile </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                    Line 1  </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    {% endfor %}
+</div>
+
+
+
+
+<div class="followers">
+    <h2 class="friends_title">My followers</h2>
+    {% if unfriends %}
+    {% for unfriend in unfriends %}
+    <div class="container" style="background-color: rgb(244,244,244)">
+        <div class="row profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <div class="profile-userpic">
+                        <img src="{{ unfriend.from_user.avatar.url }}" class="img-thumbnail">
+                    </div>
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            {{ unfriend.from_user.username }}
+                        </div>
+                        <div class="profile-usertitle-job">
+                            Developer
+                        </div>
+                    </div>
+                    <div class="profile-userbuttons">
+                        <form method="post" action="{% url 'account_system:get_make_friendship' unfriend.from_user.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Add">
+                        </form>
+                    </div>
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                    Profile </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                    Line 1  </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    {% endfor %}
+    {% endif%}
+</div>
+
+
+
+
+{% endblock %}

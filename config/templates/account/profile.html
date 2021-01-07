@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ account.username }}{% endblock %}
+{% block home %}Home{% endblock %}
+{% block children %}{{ account.username}}{% endblock %}
+{% block content_side %}
+<div id="profile_bio_info" class="container">
+    <div class="row">
+        <div class="col-md-6 img">
+            <img class="img_profile_avatar" src="{{ account.avatar.url }}" width="500" height="350">
+        </div>
+        <div id="profile_bio_data" class="col-md-6 details">
+            <div>
+                <h2 id="profile_username">About {{ account.username }}:</h2>
+                <p>First name: {{ account.first_name }}<p>
+                <p>Last  name: {{ account.last_name }}<p>
+                <p>Age: {{ account.age }}<p>
+                <p>Location: {{ account.location }}</p>
+                <p>About me: {{ account.about_me }}</p>
+                <p>Last online: {{ account.last_online }}</p>
+            </div>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} My friends {% endblock %}
+{% block content_side %}
+<div id="profile_bio_info" class="container">
+    <div class="row">
+        <div class="col-md-6 img">
+            <img src="{{ account.avatar.url }}" class="img-fluid" style="width:100%">
+        </div>
+        <div id="profile_bio_data" class="col-md-6 details">
+            <div>
+                <h2 id="profile_username">{{ account.username }}:</h2>
+                <p>First name: {{ account.first_name }}<p>
+                <p>Last  name: {{ account.last_name }}<p>
+                <p>Age: {{ account.age }}<p>
+                <p>Location: {{ account.location }}</p>
+                <p>About me: {{ account.about_me }}</p>
+                <p>Last online: {{ account.last_login }}</p>
+                {% if friends %}
+                {% else %}
+                <form method="get" action="{% url 'account_system:add_friend' account.id %}">
+                    <input type="submit" value="Add to friend">
+                </form>
+                {% endif %}
+            </div>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

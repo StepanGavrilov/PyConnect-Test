@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Settings {% endblock %}
+{% block home %}Home{% endblock %}
+{% block children %}Settings{% endblock %}
+{% block content_side %}
+<div id="edit_account_profile">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in user_edit_form %}
+        <p>{{ field }}<p>
+        {% endfor%}
+        <input type="submit" class="fadeIn fourth" value="Save">
+    </form>
+</div>
+{% endblock %}
