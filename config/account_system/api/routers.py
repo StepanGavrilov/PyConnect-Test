@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .viewsets import GetUsersPublicView
+from .viewsets import GetUsersPublicView, AccountViewset, AccountCreateViewset
 from .viewsets import GetUsersPrivateView
 from .viewsets import GetUsersFriendsPublicView
 from .viewsets import GetUsersFriendsPrivateView
@@ -31,8 +31,11 @@ urlpatterns = [
         'get': 'retrieve',
     })),
 
+    # User CRUD
+    path('users/', AccountCreateViewset.as_view()),  # CREATE
+    path('users/<id>', AccountViewset.as_view()),  # GET/DELETE/PATH/PUT
 
 
-    path('auth/', include('djoser.urls')),
-    path('auth/', include('djoser.urls.jwt')),
+    # path('auth/', include('djoser.urls')),  # User
+    path('auth/', include('djoser.urls.jwt')),  # Create/Update/Refresh JWTtoken
 ]

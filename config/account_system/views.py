@@ -136,6 +136,11 @@ def add_friend(request, slave_account) -> redirect:
     """
     slave_account = int(slave_account)
     friend_account = Account.objects.get(id=slave_account)
+    if slave_account == friend_account.id:
+        """
+        Дружба с самим собой
+        """
+        return redirect('account_system:friends')
     try:
         Friend.objects.add_friend(
             request.user,
