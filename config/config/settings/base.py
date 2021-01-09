@@ -16,6 +16,7 @@ INSTALLED_APPS = [
 
     # Custom
     'account_system.apps.AccountConfig',
+    'blog_system.apps.BlogSystemConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'debug_toolbar',
     'friendship',
+    'taggit',
 
     # AllAuth
     'allauth',

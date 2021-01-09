@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Create post {% endblock %}
+{% block home %}Home{% endblock %}
+{% block children %}Create post{% endblock %}
+{% block content_side %}
+
+<div id="post_create_form">
+<form method="post">
+    {% csrf_token %}
+    {{ post_create_form }}
+    <p><input type="submit" value="Create post"></p>
+</form>
+</div>
+
+{% endblock %}

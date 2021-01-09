@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Post wall{% endblock %}
+{% block home %}Home{% endblock %}
+{% block children %}Wall{% endblock %}
+{% block content_side %}
+<section id="blog" class="blog">
+  <div class="container" data-aos="fade-up">
+    <div class="row">
+      <div class="col-lg-8 entries">
+        {% for post in posts %}
+        <article class="entry">
+          <div class="entry-img">
+            <img src="../../static/img/blog/blog-2.jpg" alt="" class="img-fluid">
+          </div>
+          <h2 class="entry-title">
+            <a href="#">{{ post.title }}</a>
+          </h2>
+          <div class="entry-meta">
+            <ul>
+              <li class="d-flex align-items-center"><i class="icofont-user"></i> <a href="{% url 'account_system:public_profile' post.owner.id %}">{{ post.owner.username }}</a></li>
+              <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href="#"><time datetime="2020-01-01">{{ post.created }}</time></a></li>
+              <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="#">12 Comments</a></li>
+              {% for tag in post.tags.all %}
+              <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="#">{{ tag }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="entry-content">
+            <p>
+              {{ post.text }}
+            </p>
+            <div class="read-more">
+              <a href="#">Read More</a>
+            </div>
+          </div>
+        </article><!-- End blog entry -->
+        {% endfor %}
+        <div class="blog-pagination">
+          <ul class="justify-content-center">
+            <li class="disabled"><i class="icofont-rounded-left"></i></li>
+            <li><a href="#">1</a></li>
+            <li class="active"><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#"><i class="icofont-rounded-right"></i></a></li>
+          </ul>
+        </div>
+      </div><!-- End blog entries list -->
+    </div>
+  </div>
+</section><!-- End Blog Section -->
+{% endblock %}
+
+

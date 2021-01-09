@@ -5,6 +5,7 @@ from django.template.defaultfilters import capfirst
 from friendship.models import FriendshipRequest
 
 from .models import Account
+
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UsernameField, UserModel, SetPasswordForm, \
     PasswordChangeForm
 

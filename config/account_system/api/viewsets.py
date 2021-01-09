@@ -118,9 +118,10 @@ class AccountViewset(APIView):
 
 class AccountCreateViewset(generics.CreateAPIView):
     """
-    Создания аккаунта пользователя
+    Создание аккаунта пользователя
     """
 
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = AccountCreateSerializer
 
     def post(self, request, *args, **kwargs):

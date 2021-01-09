@@ -37,5 +37,6 @@ urlpatterns = [
 
                   # Apps
                   path('account/', include('account_system.urls')),
+                  path('blog/', include('blog_system.urls')),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

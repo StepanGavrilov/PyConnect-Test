@@ -54,7 +54,7 @@ class AccountProfileView(generic.detail.DetailView):
 
 class PublicAccountView(generic.detail.DetailView):
     """
-    Страницы всез пользоватлей PyConnect
+    Страницы всех пользоватлей PyConnect
     """
 
     def get(self, request, *args, **kwargs):
