@@ -32,15 +32,11 @@
             <div class="col-md-3">
                 <div class="profile-sidebar">
                     <div class="profile-userpic">
-                        <img src="{{ friend_request.to_user.avatar.url }}" class="img-thumbnail">
+                        <img src="{{ friend_request.to_user.avatar.url }}" class="comment_avatar">
                     </div>
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name">
                             <p>{{ friend_request.to_user.username }}</p>
-                            <form method="get" action="{% url 'account_system:public_profile' friend_request.to_user.id %}">
-                                {% csrf_token %}
-                                <input class="profile_button" type="submit" value="Watch" style="background-color: #2b2b2b">
-                            </form>
                         </div>
                         <div class="profile-usertitle-job">
                             Developer
@@ -49,7 +45,7 @@
                     <div class="profile-usermenu">
                         <ul class="nav">
                             <li class="active">
-                                <a href="#">
+                                <a href="{% url 'account_system:public_profile' friend_request.to_user.id %}">
                                     <i class="glyphicon glyphicon-home"></i>
                                     Profile </a>
                             </li>
@@ -86,10 +82,6 @@
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name">
                             <p>{{ friend.username }}</p>
-                            <form method="get" action="{% url 'account_system:public_profile' friend.id %}">
-                                {% csrf_token %}
-                                <input type="submit" value="Watch" style="background-color: rgb(43,43,43)">
-                            </form>
                         </div>
                         <div class="profile-usertitle-job">
                             Developer
@@ -104,7 +96,7 @@
                     <div class="profile-usermenu">
                         <ul class="nav">
                             <li class="active">
-                                <a href="#">
+                                <a href="{% url 'account_system:public_profile' friend.id %}">
                                     <i class="glyphicon glyphicon-home"></i>
                                     Profile </a>
                             </li>

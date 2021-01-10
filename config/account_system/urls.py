@@ -28,7 +28,7 @@ urlpatterns = [
 
     path('friends/', AccountFriends.as_view(), name='friends'),
     path('friends/search', SearchFriendsView.as_view(), name='search_friends'),
-    path('friends/add/<slave_account>', add_friend, name='add_friend'),
+    path('friends/add/<master_account_id>', add_friend, name='add_friend'),
     path('friends/add/friend/<slave_user_id>', get_make_friendship, name='get_make_friendship'),
     path('friends/delete/<slave_user_id>', get_delete_friendship, name='get_delete_friendship'),
 

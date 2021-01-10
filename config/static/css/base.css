@@ -2647,3 +2647,21 @@ input[type=text]:placeholder {
   text-align: center;
 
 }
+
+.hr_black{
+  background-color: #2b2b2b;
+  size: 2px;
+}
+
+#comment_avatar{
+  width: 50px;
+  height: 50px;
+}
+
+#post_delete{
+  margin-left: 0;
+}
+
+#post_comment{
+  margin-left: 0;
+}

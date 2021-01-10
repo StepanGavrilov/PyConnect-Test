@@ -6,7 +6,7 @@
 {% block content_side %}
 
 <div id="post_create_form">
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ post_create_form }}
     <p><input type="submit" value="Create post"></p>

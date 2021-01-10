@@ -28,7 +28,6 @@ class AccountLoginView(SuccessMessageMixin, LoginView):
     template_name = 'account/login.html'
     form_class = AccountLoginForm
     authentication_form = None
-    success_message = 'Logged!'
     success_url = 'testpage'
 
 
@@ -127,16 +126,17 @@ class SearchFriendsView(generic.DetailView):
                 friends = 'Your fiend!'
             return render(request, 'account/search_friend.html', {'account': account, 'friends': friends})
         except self.model.DoesNotExist:
-            return redirect('account:friends')
+            return redirect('account_system:friends')
 
 
-def add_friend(request, slave_account) -> redirect:
+def add_friend(request, master_account_id) -> redirect:
     """
     Добавление в друзья пользователя
     """
-    slave_account = int(slave_account)
-    friend_account = Account.objects.get(id=slave_account)
-    if slave_account == friend_account.id:
+    master_account_id = int(master_account_id)
+    master_account = Account.objects.get(id=master_account_id)
+    if request.user.id == master_account.id:
+        print('\nslave account\n')
         """
         Дружба с самим собой
         """
@@ -144,7 +144,7 @@ def add_friend(request, slave_account) -> redirect:
     try:
         Friend.objects.add_friend(
             request.user,
-            friend_account
+            master_account
         )
     except AlreadyExistsError:
         return redirect('account_system:friends')

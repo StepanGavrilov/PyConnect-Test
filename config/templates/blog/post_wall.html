@@ -11,10 +11,10 @@
         {% for post in posts %}
         <article class="entry">
           <div class="entry-img">
-            <img src="../../static/img/blog/blog-2.jpg" alt="" class="img-fluid">
+            <img src="{{ post.image_url }}" alt="" class="img-fluid">
           </div>
           <h2 class="entry-title">
-            <a href="#">{{ post.title }}</a>
+            <a href="{% url 'blog_system:post_detail' post.id %}">{{ post.title }}</a>
           </h2>
           <div class="entry-meta">
             <ul>
@@ -22,7 +22,7 @@
               <li class="d-flex align-items-center"><i class="icofont-wall-clock"></i> <a href="#"><time datetime="2020-01-01">{{ post.created }}</time></a></li>
               <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="#">12 Comments</a></li>
               {% for tag in post.tags.all %}
-              <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="#">{{ tag }}</a></li>
+              <li class="d-flex align-items-center"><i class="icofont-comment"></i> <a href="#">tags here</a></li>
               {% endfor %}
             </ul>
           </div>
@@ -31,7 +31,7 @@
               {{ post.text }}
             </p>
             <div class="read-more">
-              <a href="#">Read More</a>
+              <a href="{% url 'blog_system:post_detail' post.id %}">Read More</a>
             </div>
           </div>
         </article><!-- End blog entry -->
