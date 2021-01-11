@@ -55,6 +55,16 @@ class Account(AbstractUser):
         max_length=1024,
         verbose_name='About me'
     )
+    work = models.CharField(
+        blank=True,
+        max_length=32,
+        verbose_name='Work'
+    )
+    status_work = models.CharField(
+        blank=True,
+        max_length=32,
+        verbose_name='Status work'
+    )
     location = models.CharField(
         blank=True,
         max_length=32,

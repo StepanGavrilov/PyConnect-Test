@@ -6,9 +6,11 @@ from django.shortcuts import redirect, render
 from django.views import generic
 
 from django.conf import settings
-from friendship.exceptions import AlreadyExistsError
+
+from friendship.exceptions import AlreadyExistsError, AlreadyFriendsError
 
 from friendship.models import Friend, FriendshipRequest
+
 from .forms import AccountLoginForm, AccountChangePasswordForm
 from .forms import AccountEditForm
 from .forms import AccountCreateForm
@@ -28,7 +30,7 @@ class AccountLoginView(SuccessMessageMixin, LoginView):
     template_name = 'account/login.html'
     form_class = AccountLoginForm
     authentication_form = None
-    success_url = 'testpage'
+    redirect_authenticated_user = True
 
 
 class UserLogOutView(LogoutView):
@@ -36,7 +38,7 @@ class UserLogOutView(LogoutView):
     Выход из авторизаванного аккаунта
     """
     template_name = 'account/logout.html'
-    next_page = 'account_system:test'
+    next_page = '/blog/posts'  # TODO Добавить главную страницу!
 
 
 class AccountProfileView(generic.detail.DetailView):
@@ -84,7 +86,7 @@ class AccountRegisterView(generic.CreateView):
     form_class = AccountCreateForm
     context_object_name = 'account_register_form'
     template_name = 'account/register.html'
-    success_url = 'test'
+    success_url = 'login'
 
 
 class AccountEditView(generic.UpdateView):
@@ -146,7 +148,7 @@ def add_friend(request, master_account_id) -> redirect:
             request.user,
             master_account
         )
-    except AlreadyExistsError:
+    except AlreadyFriendsError:
         return redirect('account_system:friends')
     return redirect('account_system:friends')
 
@@ -176,6 +178,6 @@ class AccountChangePasswordView(PasswordChangeView):
     """
     template_name = 'account/account_change_password.html'
     form_class = AccountChangePasswordForm
-    success_url = '/account/test'
+    success_url = 'account_system:me'
 
 

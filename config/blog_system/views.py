@@ -12,6 +12,7 @@ from django.views import generic
 
 from .base.permissions import IsAuthorEntry
 
+
 class CreatePostView(generic.CreateView):
     """
     Создание поста
@@ -21,6 +22,7 @@ class CreatePostView(generic.CreateView):
     form_class = PostCreateForm
 
     def get(self, request, *args, **kwargs):
+        print('Here')
         return render(request, 'blog/post_create.html', {'post_create_form': PostCreateForm})
 
     def post(self, request, *args, **kwargs):
@@ -60,6 +62,8 @@ class PostDetailView(generic.DetailView):
     context_object_name = 'post'
 
     def get(self, request, *args, **kwargs):
+        print('DetailView')
+        print(kwargs, '\n\n\n')
         post = Post.objects.get(id=kwargs['id'])
         comments = Comment.objects.filter(post=kwargs['id'])
         return self.render_to_response({'post': post,

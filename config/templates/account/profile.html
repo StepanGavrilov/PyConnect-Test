@@ -4,23 +4,128 @@
 {% block home %}Home{% endblock %}
 {% block children %}{{ account.username}}{% endblock %}
 {% block content_side %}
-<div id="profile_bio_info" class="container">
-    <div class="row">
-        <div class="col-md-6 img">
-            <img class="img_profile_avatar" src="{{ account.avatar.url }}" width="500" height="350">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:20px">
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- Left Column -->
+    <div class="w3-col m3">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+          <h4 class="w3-center">{{ account.username }}</h4>
+          <p class="w3-center"><img src="{{ account.avatar.url }}" class="w3-circle" style="height:110px;width:110px" alt="Avatar"></p>
+          <hr>
+          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>{{ account.status_work }}</p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>{{ account.location }}</p>
+          <p><i class="fa fa-building fa-fw w3-margin-right w3-text-theme"></i>{{ account.work }}</p>
         </div>
-        <div id="profile_bio_data" class="col-md-6 details">
-            <div>
-                <h2 id="profile_username">About {{ account.username }}:</h2>
-                <p>First name: {{ account.first_name }}<p>
-                <p>Last  name: {{ account.last_name }}<p>
-                <p>Age: {{ account.age }}<p>
-                <p>Location: {{ account.location }}</p>
-                <p>About me: {{ account.about_me }}</p>
-                <p>Last online: {{ account.last_online }}</p>
-            </div>
-            </p>
+      </div>
+      <br>
+
+      <!-- Accordion -->
+      <div class="w3-card w3-round">
+        <div class="w3-white">
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> Messages</button>
+          <div id="Demo1" class="w3-hide w3-container">
+            <p>Some text..</p>
+          </div>
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> Notifications</button>
+          <div id="Demo2" class="w3-hide w3-container">
+            <p>Some text..</p>
+          </div>
+          <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> Theme</button>
+          <div id="Demo3" class="w3-hide w3-container">
+            <p>Some text..</p>
+          </div>
         </div>
+      </div>
+      <br>
+
+      <!-- Interests -->
+      <div class="w3-card w3-round w3-white w3-hide-small">
+        <div class="w3-container">
+          <p>Tags</p>
+          <p>
+            <span class="w3-tag w3-small w3-theme-d5">Tag1</span>
+            <span class="w3-tag w3-small w3-theme-d5">Tag1</span>
+            <span class="w3-tag w3-small w3-theme-d5">Tag1</span>
+            <span class="w3-tag w3-small w3-theme-d5">Tag1</span>
+            <span class="w3-tag w3-small w3-theme-d5">Tag1</span>
+          </p>
+        </div>
+      </div>
+      <br>
+
+      <!-- End Left Column -->
     </div>
+
+    <!-- Middle Column -->
+    <div class="w3-col m7">
+
+      <div class="w3-row-padding">
+        <div class="w3-col m12">
+          <div class="w3-card w3-round w3-white">
+            <div class="w3-container w3-padding">
+              <h1 style="color: rgb(205,76,65)">About me</h1>
+              <p>{{ account.about_me }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {% for post in account.posts.all %}
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+        {% if account.avatar.url %}
+        <img src="{{ account.avatar.url }}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="height:50px;width:50px">
+        {% endif %}
+        <span class="w3-right w3-opacity">{{ post.created }}</span>
+        <h4>{{ post.owner.username }}</h4><br>
+        <hr class="w3-clear">
+        <p>{{ post.text }}</p>
+        {% if post.image_url %}
+        <div class="w3-row-padding" style="margin:0 -16px">
+          <div class="w3-full">
+            <img src="{{ post.image_url }}" style="width:100%" alt="" class="w3-margin-bottom">
+          </div>
+        </div>
+        {% endif  %}
+        <a style="font-size: 25px" href="{% url 'blog_system:post_detail' post.id %}"><i class="fa fa-book"> Read more</i>{{ account.status_work }}</a>
+
+      </div>
+      {% endfor %}
+
+
+      <!-- End Middle Column -->
+    </div>
+
+    <!-- Right Column -->
+    <div class="w3-col m2">
+      <div class="w3-card w3-round w3-white w3-center">
+        <div class="w3-container">
+          <p>IN process</p>
+          <img src="/w3images/forest.jpg" alt="Image" style="width:100%;">
+          <p><strong>. . .</strong></p>
+          <p>. . .</p>
+          <p><button class="w3-button w3-block w3-theme-l4">. . .</button></p>
+        </div>
+      </div>
+      <br>
+
+      <br>
+      <!-- End Right Column -->
+    </div>
+    <!-- End Grid -->
+  </div>
+  <!-- End Page Container -->
 </div>
+<br>
 {% endblock %}

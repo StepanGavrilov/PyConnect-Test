@@ -12,6 +12,7 @@ class Post(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         db_index=True,
+        related_name='posts',
         verbose_name='Owner',
     )
     title_image = models.ImageField(
@@ -44,7 +45,6 @@ class Post(models.Model):
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
         ordering = ('created', )
-
 
     @property
     def image_url(self):

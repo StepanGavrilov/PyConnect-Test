@@ -182,7 +182,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 AUTH_USER_MODEL = 'account_system.Account'
-LOGIN_REDIRECT_URL = 'account_system:test'
+
+LOGIN_REDIRECT_URL = 'account_system:profile'
 LOGIN_URL = 'account_system:login'
 LOGOUT_URL = 'account_system:logout'
 

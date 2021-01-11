@@ -11,9 +11,10 @@ app_name = 'blog_system'
 urlpatterns = [
 
     path('posts/', PostWallView.as_view(), name='posts_wall'),
-    path('posts/<id>', PostDetailView.as_view(), name='post_detail'),
 
     path('posts/create', CreatePostView.as_view(), name='create_post'),
+    path('posts/<id>', PostDetailView.as_view(), name='post_detail'),
+
     path('posts/delete/<id>', PostDeleteView.as_view(), name='delete_post'),
 
 

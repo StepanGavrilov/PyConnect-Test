@@ -2455,7 +2455,7 @@ input[type=text]:placeholder {
 }
 
 #title_login{
-  color: #e35052;
+  color: #2b2b2b;
 }
 
 #edit_account_profile{
@@ -2466,6 +2466,9 @@ input[type=text]:placeholder {
   background-color: rgb(43, 43, 43);
   border-radius: 20px;
   color: white;
+}
+.underlineHover{
+  color: rgb(43, 43, 43);
 }
 .error_line{
   color: rgb(205, 76, 65);

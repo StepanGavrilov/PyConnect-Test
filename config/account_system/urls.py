@@ -35,8 +35,6 @@ urlpatterns = [
     path('user/<id>', PublicAccountView.as_view(), name='public_profile'),
 
     # Friends
-    path('testpage', test, name='test'),  # TODO Main page change
-
 
     # Api
     path('api/', include('account_system.api.routers')),
