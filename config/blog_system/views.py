@@ -6,7 +6,6 @@ from .forms import CommentCreateForm
 from .models import Post
 from .models import Comment
 
-
 from django.shortcuts import render, redirect
 from django.views import generic
 
@@ -22,7 +21,6 @@ class CreatePostView(generic.CreateView):
     form_class = PostCreateForm
 
     def get(self, request, *args, **kwargs):
-        print('Here')
         return render(request, 'blog/post_create.html', {'post_create_form': PostCreateForm})
 
     def post(self, request, *args, **kwargs):
@@ -41,14 +39,11 @@ class PostWallView(generic.ListView):
     """
     Лента постов
     """
-    queryset = Post.objects.all()
 
-    def get_queryset(self):
-        if self.queryset is None:
-            return None
-        return self.queryset
+    def get_queryset(self) -> Post:
+        return Post.objects.all()
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs) -> render:
         posts = self.get_queryset()
         return render(request, 'blog/post_wall.html', {'posts': posts})
 
@@ -62,8 +57,6 @@ class PostDetailView(generic.DetailView):
     context_object_name = 'post'
 
     def get(self, request, *args, **kwargs):
-        print('DetailView')
-        print(kwargs, '\n\n\n')
         post = Post.objects.get(id=kwargs['id'])
         comments = Comment.objects.filter(post=kwargs['id'])
         return self.render_to_response({'post': post,
@@ -75,11 +68,12 @@ class PostDeleteView(generic.DeleteView):
     """
     Удаление поста автором
     """
+
     model = Post
 
     def delete(self, request, *args, **kwargs):
         post = Post.objects.get(id=kwargs['id'])
-        Post.delete(post)
+        print('Permission: ', post.IsAuthorEntry)  # TODO PERMISSIONS
         return redirect('blog_system:posts_wall')
 
 
@@ -95,7 +89,6 @@ class CommentCreateView(generic.CreateView):
         post = Post.objects.get(id=kwargs['id'])
         form = self.form_class(request.POST)
         if form.is_valid():
-            print('\nValid\n')
             comment = Comment()
             comment.author = request.user
             comment.post = post
@@ -104,5 +97,3 @@ class CommentCreateView(generic.CreateView):
 
             return redirect('account_system:friends')
         return HttpResponse('<h1>not valid!</h1>')
-
-

@@ -1,13 +1,27 @@
 from django.urls import path, include
 
-from .viewsets import PostCreateViewset
+from .viewsets import PostViewset
+from .viewsets import CommentAPIView
 
 urlpatterns = [
 
     # CRUD POST
-
-    path('posts/', PostCreateViewset.as_view({'post': 'create', 'get': 'list'})),  # CREATE / GET
-    path('posts/<pk>', PostCreateViewset.as_view({'get': 'retrieve', 'delete': 'destroy', 'put': 'update'})),  # GET retrieve post
-    # path('posts/<id>')  # GET/UPDATE/DELETE
+    path('posts/<pk>', PostViewset.as_view({
+        'get': 'retrieve',
+        'delete': 'destroy',
+        'put': 'update'
+    })),  # GET
+    path('posts/', PostViewset.as_view({
+        'post': 'create',
+        'get': 'list'
+    })),  # CREATE / GET
+    path('posts/<id>/comments/<comment_id>', CommentAPIView.as_view({
+        'get': 'retrieve',
+        'delete': 'destroy'
+    })),
+    path('posts/<id>/comments/', CommentAPIView.as_view({
+        'get': 'list',
+        'post': 'create',
+    })),
 
 ]
