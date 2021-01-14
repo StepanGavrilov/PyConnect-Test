@@ -9,27 +9,27 @@ Examples
 </h2>
 
 
-<p>1. API </p>
+<h1>1. API </h1>
 <img src="https://github.com/StepanGavrilov/PyConnect-Test/blob/master/images_preview/API_screen.png">
 
 
-<p>2. Profile page </p>
+<h1>2. Profile page </h1>
 <img src="https://github.com/StepanGavrilov/PyConnect-Test/blob/master/images_preview/mypage.png">
 
 
-<p>2. Feed </p>
+<h1>3. Feed </h1>
 <img src="https://github.com/StepanGavrilov/PyConnect-Test/blob/master/images_preview/feed.png">
 
 
-<p>2. Post detail page </p>
+<h1>4. Post detail page </h1>
 <img src="https://github.com/StepanGavrilov/PyConnect-Test/blob/master/images_preview/detail_post.png">
 
 
-<p>2. Login user page </p>
+<h1>5. Login user page </h1>
 <img src="https://github.com/StepanGavrilov/PyConnect-Test/blob/master/images_preview/login.png">
 
 
-<p>2. Comment </p>
+<h1>6. Comment </h1>
 <img src="https://github.com/StepanGavrilov/PyConnect-Test/blob/master/images_preview/comment.png">
 
 
