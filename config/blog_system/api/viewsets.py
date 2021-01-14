@@ -1,42 +1,24 @@
-from rest_framework import generics
-from rest_framework import permissions
-from rest_framework import mixins
-from rest_framework import viewsets
-from rest_framework import status
+from rest_framework import viewsets, status
 
 from rest_framework.response import Response
 
-from .serializers import PostSerializer
-from .serializers import PostCreateSerializer
+from .serializers import PostSerializer, PostCreateSerializer
 
-from .serializers import CommentSerializer
-from .serializers import CommentSerializerCreate
+from .serializers import CommentSerializer, CommentSerializerCreate
 
-from ..models import Post
-from ..models import Comment
+from ..models import Post, Comment
 
-from ..base.classes import CreateUpdateDestroy
-from ..base.classes import ListRetrieveMixins
+from ..base.classes import CreateUpdateDestroy, ListRetrieveMixins
 
-from ..base.permissions import IsAuthorEntry
+from ..base.permissions import IsAuthorEntry, IsAuthorCommentEntry
 
 
 class PostViewset(CreateUpdateDestroy, ListRetrieveMixins, viewsets.GenericViewSet):
     """
     CRUD Поста
     """
-    permission_classes_by_action = {'delete': [IsAuthorEntry],
-                                    }
 
-    def get_permissions(self):
-        print('\n\tPermissions\n')
-        try:
-            print('\tPermissions: ', self.permission_classes_by_action)
-            # return permission_classes depending on `action`
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
-        except KeyError:
-            # action is not set return default permission_classes
-            return [permission() for permission in self.permission_classes]
+    permission_classes = (IsAuthorEntry,)
 
     def get_serializer_class(self):
         """
@@ -44,20 +26,15 @@ class PostViewset(CreateUpdateDestroy, ListRetrieveMixins, viewsets.GenericViewS
         """
 
         if self.action == 'create':
-            print('\tCreate')
             return PostCreateSerializer
         elif self.action == 'list':
-            print('\tList')
             return PostSerializer
         elif self.action == 'retrieve':
-            print('\tRetrieve')
             return PostSerializer
         elif self.action == 'destroy':
-            print('\tDestroy')
             return PostSerializer
         elif self.action == 'update':
-            print('\tUpdate')
-            return PostSerializer
+            return PostCreateSerializer
 
     def get_object(self):
         """
@@ -77,28 +54,26 @@ class PostViewset(CreateUpdateDestroy, ListRetrieveMixins, viewsets.GenericViewS
         Развёрнутый пост
         """
         instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+        if isinstance(instance, Post):
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     def perform_create(self, serializer) -> None:
         serializer.save(owner=self.request.user)
 
-    # TODO CHECK PERMISSIONS
-    def perform_destroy(self, instance):
+    def perform_destroy(self, instance) -> None:
         """
         """
-        print('\n\tPerform destroy', instance)
+        instance.delete()
 
-    def destroy(self, request, *args, **kwargs):
+    def destroy(self, request, *args, **kwargs) -> Response:
         """
         """
-        print('\n\n\tDestroy here\n\n')
-
         instance = self.get_object()
-        print('\tPost object: ', instance, '\n\tRequest user: ', self.request.user)
-        author_per = self.check_object_permissions(self.request, instance)
-        print(f'\tAuthor permission: {author_per}')
-
+        if not isinstance(instance, Post):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        self.check_object_permissions(self.request, instance)
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -112,36 +87,72 @@ class PostViewset(CreateUpdateDestroy, ListRetrieveMixins, viewsets.GenericViewS
         post = serializer
         return Response({'post': post.data})
 
+    def partial_update(self, request, *args, **kwargs) -> Response:
+        """
+        """
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs) -> Response:
+        """
+        """
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        if not isinstance(instance, Post):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.check_object_permissions(self.request, instance)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
 
 class CommentAPIView(CreateUpdateDestroy, ListRetrieveMixins, viewsets.GenericViewSet):
     """
     CRUD Комментария
     """
     lookup_url_kwarg = 'id'
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = (IsAuthorCommentEntry,)
 
     def get_serializer_class(self):
         """
         Выбор сериализатора по дейсвтию пользователя
         """
-        if self.action == 'list':
-            return CommentSerializer
-        elif self.action == 'create':
+
+        if self.action == 'create':
             return CommentSerializerCreate
+        elif self.action == 'list':
+            return CommentSerializer
         elif self.action == 'retrieve':
             return CommentSerializer
+        elif self.action == 'destroy':
+            return CommentSerializer
+        elif self.action == 'update':
+            return CommentSerializerCreate
 
-    def get_comment_detail(self) -> Comment:
+    def get_comment_detail(self):
         """
         Получение конкретного комметария
         """
-        return Comment.objects.get(id=self.kwargs['comment_id'])
+        try:
+            comment = Comment.objects.get(id=self.kwargs['comment_id'])
+        except Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return comment
 
-    def get_object(self) -> Post:
+    def get_object(self):
         """
         Получение поста, где находятся все его комментарии
         """
-        return Post.objects.get(id=self.kwargs[self.lookup_url_kwarg])
+        try:
+            post = Post.objects.get(id=self.kwargs[self.lookup_url_kwarg])
+        except Post.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return post
 
     def get_queryset(self) -> Comment:
         """
@@ -171,6 +182,38 @@ class CommentAPIView(CreateUpdateDestroy, ListRetrieveMixins, viewsets.GenericVi
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
-    def destroy(self, request, *args, **kwargs):
-        print('\t\nDestroy')
-        pass
+    def perform_destroy(self, instance) -> None:
+        instance.delete()
+
+    def destroy(self, request, *args, **kwargs) -> Response:
+
+        instance = self.get_comment_detail()  # Post
+        if not isinstance(instance, Comment):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        self.check_object_permissions(self.request, instance)
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def partial_update(self, request, *args, **kwargs) -> Response:
+        """
+        """
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs) -> Response:
+        """
+        """
+        partial = kwargs.pop('partial', False)
+        instance = self.get_comment_detail()
+        if not isinstance(instance, Comment):
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.check_object_permissions(self.request, instance)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)

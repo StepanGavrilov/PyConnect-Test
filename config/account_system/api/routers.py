@@ -1,9 +1,7 @@
 from django.urls import path, include
 
-from .viewsets import GetUsersPublicView, AccountViewset, AccountCreateViewset
-from .viewsets import GetUsersPrivateView
-from .viewsets import GetUsersFriendsPublicView
-from .viewsets import GetUsersFriendsPrivateView
+from .viewsets import GetUsersPublicView, AccountViewset, AccountCreateViewset, GetUsersPrivateView,\
+    GetUsersFriendsPublicView, GetUsersFriendsPrivateView
 
 
 urlpatterns = [

@@ -1,18 +1,14 @@
-import rest_framework
-from django.http import Http404
-from rest_framework import permissions, views, status
-from rest_framework import generics
-from rest_framework.permissions import DjangoModelPermissions
+from rest_framework import permissions, views, status, generics
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from friendship.models import Friend, Follow, Block, FriendshipRequest
+from friendship.models import Friend
 
-from .serializers import GetUsersPrivateSerializer, AccountSerializer, AccountCreateSerializer
-from .serializers import GetUsersPublicSerializer
-from .serializers import GetUserFriendsPrivateSerializer
-from .serializers import GetUserFriendsPublicSerializer
+from .serializers import GetUsersPrivateSerializer, AccountSerializer, AccountCreateSerializer, \
+    GetUsersPublicSerializer, GetUserFriendsPrivateSerializer, GetUserFriendsPublicSerializer
+
 
 from ..models import Account
 

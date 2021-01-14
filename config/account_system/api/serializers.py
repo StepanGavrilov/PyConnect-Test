@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from friendship.models import Friend, Follow, Block, FriendshipRequest
+from friendship.models import Friend
 
 from ..models import Account
 

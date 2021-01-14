@@ -1,5 +1,4 @@
-from ..models import Post
-from ..models import Comment
+from ..models import Post, Comment
 
 from rest_framework import serializers
 
@@ -29,6 +28,12 @@ class PostCreateSerializer(serializers.ModelSerializer):
         post = Post.objects.create(**validated_data)
         return post
 
+    def update(self, instance, validated_data):
+        for (key, value) in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
+
 
 class CommentSerializer(serializers.ModelSerializer):
     """
@@ -54,3 +59,9 @@ class CommentSerializerCreate(serializers.ModelSerializer):
     def create(self, validated_data):
         comment = Comment.objects.create(**validated_data)
         return comment
+
+    def update(self, instance, validated_data):
+        for (key, value) in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
