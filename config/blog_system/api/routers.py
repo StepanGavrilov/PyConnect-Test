@@ -6,7 +6,7 @@ from .viewsets import CommentAPIView
 urlpatterns = [
 
     # CRUD POST
-    path('posts/<pk>', PostViewset.as_view({
+    path('posts/<id>', PostViewset.as_view({
         'get': 'retrieve',
         'delete': 'destroy',
         'put': 'update'
@@ -19,6 +19,8 @@ urlpatterns = [
         'get': 'retrieve',
         'delete': 'destroy'
     })),
+
+
     path('posts/<id>/comments/', CommentAPIView.as_view({
         'get': 'list',
         'post': 'create',

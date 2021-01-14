@@ -7,4 +7,8 @@ class IsAuthorEntry(BasePermission):
     Проверяем автора объекта
     """
     def has_object_permission(self, request, view, obj):
-        return obj.author == request.user or obj.entry.group.founder == request.user
+        print('\nCheck 1\n')
+        print(request)
+        print(view)
+        print(obj)
+        return obj.owner == request.user or obj.entry.group.founder == request.user

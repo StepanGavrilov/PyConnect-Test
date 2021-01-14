@@ -44,7 +44,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
-        ordering = ('created', )
+        ordering = ('-created', )
 
     @property
     def image_url(self):

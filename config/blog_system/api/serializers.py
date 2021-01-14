@@ -16,6 +16,20 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'text', 'owner')
 
 
+class PostCreateSerializer(serializers.ModelSerializer):
+    """
+    Серриализатор для создания постов
+    """
+
+    class Meta:
+        model = Post
+        fields = ('title', 'text')
+
+    def create(self, validated_data):
+        post = Post.objects.create(**validated_data)
+        return post
+
+
 class CommentSerializer(serializers.ModelSerializer):
     """
     Сериализатор для комментариев под постами
@@ -29,6 +43,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializerCreate(serializers.ModelSerializer):
+    """
+    Серриализатор для создания комментариев под постами
+    """
 
     class Meta:
         model = Comment
