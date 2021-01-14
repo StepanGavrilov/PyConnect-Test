@@ -14,11 +14,11 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="PyConnect API",
         default_version='v1',
-        description="Test description",
+        description="API for account and blog systems",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@snippets.local"),
+        contact=openapi.Contact(email="in process"),
         license=openapi.License(name="BSD License"),
     ),
     public=True,
@@ -38,5 +38,9 @@ urlpatterns = [
                   # Apps
                   path('account/', include('account_system.urls')),
                   path('blog/', include('blog_system.urls')),
+
+                  # Api
+                  path('api/account/', include('account_system_api.urls')),
+                  path('api/blog/', include('blog_system_api.urls')),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

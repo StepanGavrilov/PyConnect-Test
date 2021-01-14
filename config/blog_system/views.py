@@ -1,15 +1,12 @@
 from django.http import HttpResponse
 
-from .forms import PostCreateForm
-from .forms import CommentCreateForm
+from .forms import PostCreateForm, CommentCreateForm
 
-from .models import Post
-from .models import Comment
+from .models import Post, Comment
 
 from django.shortcuts import render, redirect
-from django.views import generic
 
-from .base.permissions import IsAuthorEntry
+from django.views import generic
 
 
 class CreatePostView(generic.CreateView):

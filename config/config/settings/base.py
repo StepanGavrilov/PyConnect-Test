@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     # Custom
     'account_system.apps.AccountConfig',
     'blog_system.apps.BlogSystemConfig',
+    'blog_system_api.apps.BlogSystemApiConfig',
+    'account_system_api.apps.AccountSystemApiConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',

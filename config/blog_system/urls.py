@@ -1,10 +1,7 @@
 from django.urls import path, include
 
-from .views import CreatePostView
-from .views import PostWallView
-from .views import PostDetailView
-from .views import PostDeleteView
-from .views import CommentCreateView
+from .views import CreatePostView, PostWallView, PostDetailView, PostDeleteView, CommentCreateView
+
 
 app_name = 'blog_system'
 
@@ -19,9 +16,6 @@ urlpatterns = [
 
 
     path('posts/<id>/comments/create', CommentCreateView.as_view(), name='create_comment'),
-
-    # Api
-    path('api/', include('blog_system.api.routers'))
 
 
 ]

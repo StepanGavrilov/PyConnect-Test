@@ -1,16 +1,8 @@
 from django.urls import path, include
 
-from .views import get_user_edit, get_make_friendship, get_delete_friendship, PublicAccountView
-from .views import test
-from .views import add_friend
-
-from .views import AccountProfileView
-from .views import AccountRegisterView
-from .views import UserLogOutView
-from .views import AccountFriends
-from .views import AccountLoginView
-from .views import SearchFriendsView
-from .views import AccountChangePasswordView
+from .views import get_user_edit, get_make_friendship, get_delete_friendship, PublicAccountView, add_friend,\
+    AccountProfileView, AccountRegisterView, UserLogOutView, AccountFriends, AccountLoginView, SearchFriendsView,\
+    AccountChangePasswordView
 
 
 app_name = 'account_system'
@@ -34,10 +26,7 @@ urlpatterns = [
 
     path('user/<id>', PublicAccountView.as_view(), name='public_profile'),
 
-    # Friends
 
-    # Api
-    path('api/', include('account_system.api.routers')),
     # Apps
     path('friendship/', include('friendship.urls')),
     # SocialAuth

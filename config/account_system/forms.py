@@ -1,13 +1,14 @@
 from django import forms
-from django.contrib.auth import authenticate, password_validation
+
+from django.contrib.auth import authenticate
+
 from django.core.exceptions import ValidationError
+
 from django.template.defaultfilters import capfirst
-from friendship.models import FriendshipRequest
 
 from .models import Account
 
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UsernameField, UserModel, SetPasswordForm, \
-    PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UsernameField, UserModel, PasswordChangeForm
 
 
 class AccountLoginForm(forms.Form):

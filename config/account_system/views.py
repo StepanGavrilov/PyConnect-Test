@@ -1,4 +1,5 @@
 from django.contrib.auth.views import LogoutView, LoginView, PasswordChangeView, PasswordChangeDoneView
+
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django.shortcuts import redirect, render
@@ -11,10 +12,7 @@ from friendship.exceptions import AlreadyExistsError, AlreadyFriendsError
 
 from friendship.models import Friend, FriendshipRequest
 
-from .forms import AccountLoginForm, AccountChangePasswordForm
-from .forms import AccountEditForm
-from .forms import AccountCreateForm
-from .forms import FriendsSearchForm
+from .forms import AccountLoginForm, AccountChangePasswordForm, AccountEditForm, AccountCreateForm, FriendsSearchForm
 
 from .models import Account
 

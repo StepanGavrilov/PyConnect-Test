@@ -1,7 +1,7 @@
-from .models import Post
-from .models import Comment
+from .models import Post, Comment
 
 from django.forms import ModelForm
+
 from django import forms
 
 
