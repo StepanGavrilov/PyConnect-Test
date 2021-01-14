@@ -5,7 +5,7 @@
 </h2>
 
 <h3>API</h3>
-! [Иллюстрация к проекту] (https://github.com/StepanGavrilov/PyConnect-Test/blob/master/images_preview/API_screen.png)
+! [Иллюстрация к проекту] (<img src="https://github.com/StepanGavrilov/PyConnect-Test/blob/master/images_preview/API_screen.png">)
 
 <h3>Examples</h3>
 
