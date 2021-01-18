@@ -1,7 +1,7 @@
 <h1>PyConnect</h1>
 
 <h2>
-Мини социальная сеть на Python django
+Мини социальная сеть на Python django + API
 </h2>
 
 <h2>
